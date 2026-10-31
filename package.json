@@ -1,0 +1,7 @@
+{
+  "name": "saint-germain-romainville-site",
+  "private": true,
+  "scripts": {
+    "dev": "npx --yes serve@14 -l ${PORT:-8080} ."
+  }
+}

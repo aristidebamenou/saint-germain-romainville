@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# WebStorm (fichiers personnels)
+.idea/workspace.xml
+.idea/shelf/
+.idea/usage.statistics.xml
+
+# Claude Code (réglages locaux)
+.claude/settings.local.json

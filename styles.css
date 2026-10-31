@@ -1,0 +1,193 @@
+/* Saint-Germain-l’Auxerrois de Romainville — v2
+   Direction : photographie plein écran, grand mot-symbole, légendes sobres en bas à gauche,
+   sections d’information très aérées, pied de page noir. */
+
+:root {
+  --fond: #ffffff;
+  --texte: #111111;
+  --texte-doux: #5c5c5c;
+  --trait: #dcdcdc;
+  --surface: #f3f3f1;
+  --nuit: #0b0b0c;
+  --sur-nuit: #f5f5f3;
+  --sur-nuit-doux: #a9a9a6;
+  --vermillon: #c8452f;
+  --a-completer: #ffe08a;
+
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --marge: clamp(1.25rem, 3.4vw, 3.5rem);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #121212;
+    --texte: #f2f2f0;
+    --texte-doux: #a3a3a0;
+    --trait: #2c2c2c;
+    --surface: #1b1b1b;
+    --a-completer: #6b5310;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--vermillon); outline-offset: 3px; }
+
+.saut { position: absolute; left: -999px; }
+.saut:focus { left: 1rem; top: 1rem; background: #fff; color: #111; padding: .5rem 1rem; z-index: 50; }
+
+/* ---------- En-tête posé sur la photo ---------- */
+.entete {
+  position: absolute; inset: 0 0 auto; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.1rem var(--marge);
+  color: #fff;
+}
+.entete nav ul { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
+.entete nav a { text-decoration: none; }
+.entete nav a:hover { text-decoration: underline; text-underline-offset: .3em; }
+.bouton {
+  display: inline-block; background: var(--vermillon); color: #fff; text-decoration: none;
+  font-weight: 600; font-size: .95rem; padding: .7rem 1.2rem; white-space: nowrap;
+}
+.bouton:hover { background: #a93622; }
+
+/* ---------- Photos plein écran ---------- */
+/* Chaque panneau prend sa photo dans --photo (ex. style="--photo:url(images/facade.jpg)").
+   Tant que la photo n’existe pas, le dégradé de secours s’affiche. */
+.photo {
+  position: relative; isolation: isolate;
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 6rem var(--marge) 2.5rem;
+  color: #fff; text-decoration: none;
+  background: var(--photo, none) center / cover no-repeat, var(--secours, #222);
+}
+.photo::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 45%),
+              linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 30%);
+}
+.photo .prise {
+  position: absolute; top: 5.5rem; right: var(--marge);
+  font-size: .75rem; letter-spacing: .04em; color: rgba(255,255,255,.55);
+  border: 1px dashed rgba(255,255,255,.35); padding: .3rem .6rem; max-width: 18rem; text-align: right;
+}
+a.photo:hover .titre { text-decoration: underline; text-underline-offset: .25em; text-decoration-thickness: 2px; }
+
+.etiquette {
+  display: inline-block; align-self: flex-start;
+  background: #fff; color: #111;
+  font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .15rem .4rem; margin-bottom: .6rem;
+}
+.titre { margin: 0; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.sous-titre { margin: .15rem 0 0; font-size: 1rem; }
+
+/* Dégradés de secours, un par sujet */
+.s-facade  { --secours: radial-gradient(120% 80% at 60% 40%, #3d4a63 0%, #1b2233 55%, #0c0f17 100%); }
+.s-vitraux { --secours: radial-gradient(90% 90% at 30% 35%, #2f56b8 0%, #172a66 45%, #0a1230 100%); }
+.s-vierge  { --secours: radial-gradient(80% 90% at 50% 40%, #8a7458 0%, #4a3b2b 50%, #1a140e 100%); }
+.s-nef     { --secours: radial-gradient(100% 80% at 50% 20%, #b9ab92 0%, #6d6352 45%, #26221b 100%); }
+
+/* ---------- Ouverture ---------- */
+.ouverture { justify-content: space-between; padding-top: 4.5rem; }
+.mot {
+  margin: 0; font-weight: 500; line-height: .86; letter-spacing: -.01em; text-transform: uppercase;
+  font-size: 10vw; white-space: nowrap; width: max-content; max-width: none;
+}
+.ouverture .prise { top: auto; bottom: 9rem; }
+.mot .ligne { display: inline; }
+.mot .tiret { display: inline; }
+.ouverture .bas { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; }
+.ouverture .rattachement { font-size: .8rem; line-height: 1.4; text-align: right; color: rgba(255,255,255,.85); }
+.ouverture .rattachement strong { display: block; font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+
+/* ---------- Sections d’information ---------- */
+.info { padding: clamp(4rem, 9vw, 8rem) var(--marge); }
+.info.sombre { background: var(--nuit); color: var(--sur-nuit); --texte-doux: var(--sur-nuit-doux); --trait: #2a2a2a; }
+.grille { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
+.chapeau { grid-column: 1 / span 4; }
+.corps { grid-column: 6 / span 7; }
+
+.rubrique { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 1rem; }
+h2 { font-size: clamp(2rem, 4.2vw, 3.6rem); line-height: 1.02; font-weight: 500; letter-spacing: -.015em; margin: 0; }
+h3 { font-size: 1.3rem; font-weight: 600; margin: 0 0 .35rem; }
+.texte-doux { color: var(--texte-doux); }
+
+/* Horaires : chiffres en très grand */
+.horaires { list-style: none; margin: 0; padding: 0; }
+.horaires li { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 1rem; padding: 1.4rem 0; border-top: 1px solid var(--trait); }
+.horaires li:last-child { border-bottom: 1px solid var(--trait); }
+.horaires .jour { font-size: 1.2rem; }
+.horaires .jour small { display: block; font-size: .9rem; color: var(--texte-doux); }
+.horaires .heure { font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 500; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.note { margin-top: 1.5rem; font-size: .95rem; color: var(--texte-doux); max-width: 34rem; }
+
+.archive { margin: 2.5rem 0 0; max-width: 24rem; }
+.archive img { display: block; width: 100%; height: auto; filter: grayscale(1) contrast(1.05); }
+.archive figcaption { font-size: .85rem; color: var(--texte-doux); margin-top: .5rem; }
+.pied .bas a { text-decoration: underline; }
+
+/* Sacrements */
+.cartes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+.cartes article { padding: 1.6rem 2rem 1.8rem 0; border-top: 1px solid var(--trait); }
+.cartes article:nth-child(even) { padding-left: 2rem; border-left: 1px solid var(--trait); }
+.cartes p { margin: 0; max-width: 28rem; }
+
+/* Histoire */
+.frise { list-style: none; margin: 0; padding: 0; }
+.frise li { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; padding: 1.25rem 0; border-top: 1px solid var(--trait); }
+.frise .an { font-size: 1.6rem; font-weight: 500; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.frise p { margin: 0; max-width: 36rem; }
+
+/* Nous trouver */
+.adresse { font-size: clamp(1.5rem, 2.8vw, 2.2rem); line-height: 1.2; font-weight: 500; margin: 0 0 2rem; }
+.pratique { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2rem; margin: 0; }
+.pratique dt { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+.pratique dd { margin: 0; }
+.carte { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; margin-top: 3rem; filter: grayscale(1) contrast(1.05); }
+
+.a-completer { background: var(--a-completer); color: inherit; padding: 0 .3em; }
+
+/* Pied de page noir */
+.pied { background: #000; color: #f2f2f0; padding: 4rem var(--marge) 2.5rem; font-size: .95rem; }
+.pied .grille > div:first-child { grid-column: 1 / span 5; }
+.pied .grille > div:nth-child(2) { grid-column: 7 / span 3; }
+.pied .grille > div:nth-child(3) { grid-column: 10 / span 3; }
+.pied ul { list-style: none; margin: 0; padding: 0; }
+.pied li + li { margin-top: .5rem; }
+.pied a { text-decoration: none; }
+.pied a:hover { text-decoration: underline; }
+.pied .bas { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid #2a2a2a; font-size: .8rem; color: #8d8d8a; }
+
+/* ---------- Petits écrans ---------- */
+@media (max-width: 56rem) {
+  .chapeau, .corps,
+  .pied .grille > div:first-child, .pied .grille > div:nth-child(2), .pied .grille > div:nth-child(3) { grid-column: 1 / -1; }
+  .cartes, .pratique { grid-template-columns: 1fr; }
+  .cartes article, .cartes article:nth-child(even) { padding: 1.4rem 0; border-left: 0; }
+  .entete nav ul { display: none; }
+}
+@media (max-width: 40rem) {
+  .mot .ligne { display: table; }
+  .mot .tiret { display: none; }
+  .mot { font-size: 21vw; }
+  .ouverture .rattachement { text-align: left; }
+  .frise li { grid-template-columns: 1fr; gap: .2rem; }
+  .photo .prise { top: 50%; bottom: auto; }
+}
