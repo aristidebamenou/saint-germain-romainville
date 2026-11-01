@@ -1,4 +1,4 @@
-i# Site vitrine — Saint-Germain-l’Auxerrois de Romainville
+## Site vitrine — Saint-Germain-l’Auxerrois de Romainville
 
 Site statique : `index.html` + `styles.css`, aucune dépendance ni build.
 Police chargée depuis Google Fonts (Archivo), plan via OpenStreetMap.
