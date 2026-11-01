@@ -30,6 +30,16 @@
   </script>
   <!-- Statistiques de visites : GoatCounter (sans cookie, sans bandeau de consentement) -->
   <script data-goatcounter="https://sgaromainville.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <!-- Alerte à chaque visite : notification ntfy.sh (sauf en local) -->
+  <script>
+    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+      fetch('https://ntfy.sh/sgaromainville-visites-f8c56c34', {
+        method: 'POST',
+        keepalive: true,
+        body: 'Nouvelle visite du site' + (document.referrer ? ' (depuis ' + document.referrer + ')' : '')
+      }).catch(function () {});
+    }
+  </script>
 </head>
 <body>
   <a class="saut" href="#messes">Aller au contenu</a>
