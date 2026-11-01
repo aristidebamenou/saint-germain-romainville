@@ -1,4 +1,4 @@
-# Site vitrine — Saint-Germain-l’Auxerrois de Romainville
+i# Site vitrine — Saint-Germain-l’Auxerrois de Romainville
 
 Site statique : `index.html` + `styles.css`, aucune dépendance ni build.
 Police chargée depuis Google Fonts (Archivo), plan via OpenStreetMap.
@@ -36,6 +36,11 @@ GitHub Pages, déployé par GitHub Actions (`.github/workflows/deploy.yml`) à c
 Seuls `index.html`, `styles.css` et `images/` (s’il existe) sont publiés.
 Prérequis côté dépôt : Settings → Pages → Source : « GitHub Actions ».
 Alternative sans GitHub : glisser `index.html` et `styles.css` dans Netlify Drop.
+
+## Statistiques de visites
+Compteur GoatCounter, tableau de bord : https://sgaromainville.goatcounter.com.
+Aucun cookie, donc pas de bandeau de consentement.
+Les visiteurs équipés d’un bloqueur (Brave, uBlock…) ne sont pas comptés : les chiffres sont un minimum.
 
 ## Sources
 Histoire : fiche de Seine-Saint-Denis Tourisme et dossier de l’Inventaire du patrimoine d’Île-de-France.
