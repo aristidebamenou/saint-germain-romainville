@@ -1,17 +1,23 @@
-/* Saint-Germain-l’Auxerrois de Romainville — v2
+/* Saint-Germain-l’Auxerrois de Romainville — v3, palette badigeon, ardoise et rubis
    Direction : photographie plein écran, grand mot-symbole, légendes sobres en bas à gauche,
    sections d’information très aérées, pied de page noir. */
 
 :root {
-  --fond: #ffffff;
-  --texte: #111111;
-  --texte-doux: #5c5c5c;
-  --trait: #dcdcdc;
-  --surface: #f3f3f1;
-  --nuit: #0b0b0c;
-  --sur-nuit: #f5f5f3;
-  --sur-nuit-doux: #a9a9a6;
-  --vermillon: #c8452f;
+  /* Palette validée le 14 novembre 2026 : la pierre comme structure, le vitrail comme lumière */
+  --fond: #E8E5DE;          /* Badigeon, dominante */
+  --texte: #1E2B3C;         /* Ardoise, support */
+  --texte-doux: #55606E;    /* Ardoise douce */
+  --trait: #C9C4B8;         /* Filet pierre */
+  --surface: #F3F1EC;       /* Badigeon clair */
+  --nuit: #1E2B3C;          /* Ardoise pour les sections sombres et le pied de page */
+  --sur-nuit: #E8E5DE;
+  --sur-nuit-doux: #C9C4B8;
+  --trait-nuit: #3A4859;    /* Rainure de triglyphe */
+  --rubis: #9E1B32;         /* Rubis vitrail, accent rare */
+  --rubis-survol: #7A1426;
+  --sur-rubis: #FFFFFF;
+  --lien: var(--rubis);
+  --lien-survol: var(--rubis-survol);
   --a-completer: #ffe08a;
 
   --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
@@ -19,13 +25,18 @@
   color-scheme: light;
 }
 
+/* Mode sombre : l’ardoise devient le fond, le badigeon le texte. Le rubis ne sert plus qu’en fond de bouton. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --fond: #121212;
-    --texte: #f2f2f0;
-    --texte-doux: #a3a3a0;
-    --trait: #2c2c2c;
-    --surface: #1b1b1b;
+    --fond: #1E2B3C;
+    --texte: #E8E5DE;
+    --texte-doux: #C9C4B8;
+    --trait: #3A4859;
+    --surface: #3A4859;
+    --nuit: #3A4859;
+    --trait-nuit: #55606E;
+    --lien: var(--texte);
+    --lien-survol: var(--texte);
     --a-completer: #6b5310;
     color-scheme: dark;
   }
@@ -45,10 +56,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; }
-:focus-visible { outline: 3px solid var(--vermillon); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--rubis); outline-offset: 3px; }
 
 .saut { position: absolute; left: -999px; }
-.saut:focus { left: 1rem; top: 1rem; background: #fff; color: #111; padding: .5rem 1rem; z-index: 50; }
+.saut:focus { left: 1rem; top: 1rem; background: var(--fond); color: var(--texte); padding: .5rem 1rem; z-index: 50; }
 
 /* ---------- En-tête posé sur la photo ---------- */
 .entete {
@@ -61,10 +72,10 @@ a { color: inherit; }
 .entete nav a { text-decoration: none; }
 .entete nav a:hover { text-decoration: underline; text-underline-offset: .3em; }
 .bouton {
-  display: inline-block; background: var(--vermillon); color: #fff; text-decoration: none;
+  display: inline-block; background: var(--rubis); color: var(--sur-rubis); text-decoration: none;
   font-weight: 600; font-size: .95rem; padding: .7rem 1.2rem; white-space: nowrap;
 }
-.bouton:hover { background: #a93622; }
+.bouton:hover { background: var(--rubis-survol); }
 
 /* ---------- Photos plein écran ---------- */
 /* Chaque panneau prend sa photo dans --photo (ex. style="--photo:url(images/facade.jpg)").
@@ -91,7 +102,7 @@ a.photo:hover .titre { text-decoration: underline; text-underline-offset: .25em;
 
 .etiquette {
   display: inline-block; align-self: flex-start;
-  background: #fff; color: #111;
+  background: #E8E5DE; color: #1E2B3C;
   font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
   padding: .15rem .4rem; margin-bottom: .6rem;
 }
@@ -119,7 +130,9 @@ a.photo:hover .titre { text-decoration: underline; text-underline-offset: .25em;
 
 /* ---------- Sections d’information ---------- */
 .info { padding: clamp(4rem, 9vw, 8rem) var(--marge); }
-.info.sombre { background: var(--nuit); color: var(--sur-nuit); --texte-doux: var(--sur-nuit-doux); --trait: #2a2a2a; }
+.info.sombre { background: var(--nuit); color: var(--sur-nuit); --texte-doux: var(--sur-nuit-doux); --trait: var(--trait-nuit); --lien: var(--sur-nuit); --lien-survol: var(--sur-nuit); }
+.info a { color: var(--lien); }
+.info a:hover { color: var(--lien-survol); }
 .grille { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
 .chapeau { grid-column: 1 / span 4; }
 .corps { grid-column: 6 / span 7; }
@@ -165,7 +178,7 @@ h3 { font-size: 1.3rem; font-weight: 600; margin: 0 0 .35rem; }
 .a-completer { background: var(--a-completer); color: inherit; padding: 0 .3em; }
 
 /* Pied de page noir */
-.pied { background: #000; color: #f2f2f0; padding: 4rem var(--marge) 2.5rem; font-size: .95rem; }
+.pied { background: var(--nuit); color: var(--sur-nuit); padding: 4rem var(--marge) 2.5rem; font-size: .95rem; }
 .pied .grille > div:first-child { grid-column: 1 / span 5; }
 .pied .grille > div:nth-child(2) { grid-column: 7 / span 3; }
 .pied .grille > div:nth-child(3) { grid-column: 10 / span 3; }
@@ -173,7 +186,7 @@ h3 { font-size: 1.3rem; font-weight: 600; margin: 0 0 .35rem; }
 .pied li + li { margin-top: .5rem; }
 .pied a { text-decoration: none; }
 .pied a:hover { text-decoration: underline; }
-.pied .bas { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid #2a2a2a; font-size: .8rem; color: #8d8d8a; }
+.pied .bas { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--trait-nuit); font-size: .8rem; color: var(--sur-nuit-doux); }
 
 /* ---------- Petits écrans ---------- */
 @media (max-width: 56rem) {
